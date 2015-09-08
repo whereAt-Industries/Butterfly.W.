@@ -1,0 +1,37 @@
+.user-info {
+    max-width: 1200px;
+    padding: 5px 10px;
+    margin:0 auto;
+    border: 1px solid #ddd;
+}
+.user-info .image {
+    max-width: 70px;
+    height: 70px;
+    margin-right: 5px;
+}
+.toggle-switch {
+    display: inline-block;
+    color: #0000CC;
+    background-color: #fff;
+    padding: 3px 0;
+    margin: 0;
+    border-color: #0000CC;
+    border-radius: 0;
+}
+.toggle-switch span {
+    color: #333;
+    background-color: #fff;
+    padding: 5px 10px;
+}
+.toggle-switch span.on {
+    color: #fff;
+    background-color: #0000CC;
+}
+.toggle-switch.off span.on {
+    color: #333;
+    background-color: #fff;
+}
+.toggle-switch.off span.off {
+    color: #fff;
+    background-color: #0000CC;
+}
