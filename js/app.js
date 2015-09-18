@@ -5,5 +5,10 @@ $(document).ready(function () {
         // redirect to #A2.0 onsuccess otherwise show error message
         e.preventDefault();
     });
-});
 
+    $("#email-alert-switch").click(function() {
+        $(this).toggleClass("off");
+
+        // Make API call to store new user choice
+    });
+});
