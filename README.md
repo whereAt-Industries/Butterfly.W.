@@ -1,5 +1,19 @@
 # Butterfly.W.
 
+### Installation
+
+1. With Node.js installed, run the following one liner from the project root directory:
+```
+ npm install -g gulp bower && npm install && bower install
+```
+
+2. Serve ```<path-to-project>/app``` from a php enabled web server
+e.g For wampserver/apache, set ```DocumentRoot "<path-to-project>/app"```
+
+
+# Polymer 
+*This section has been preserved from Polymer Starter Kit readme, use it only to get acquainted with Polymer*
+
 ![](https://cloud.githubusercontent.com/assets/110953/7877439/6a69d03e-0590-11e5-9fac-c614246606de.png)
 ## Polymer Starter Kit
 
