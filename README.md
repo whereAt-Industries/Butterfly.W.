@@ -7,10 +7,25 @@ With Node.js installed, run the following one liner from the project root direct
  npm install -g gulp bower && npm install && bower install
 ```
 
+### Testing
+run the following command from the project root directory
+```
+gulp serve
+```
+
+*API calls (e.g login, settings) through PHP bridge won't work in this mode, follow the deployment guide to enable them*
+
 ### Deployment
-1. Install a php enabled web server like wampserver
-2. Enable php_curl extension on web server
-3. Set ```<path-to-project>/app``` as the DocumentRoot
+1. run the following command from the project root directory
+```
+gulp default
+```
+This will create a ```dist``` folder in your project root directory
+2. Install a php enabled web server like LAMP server
+3. Enable php_curl extension on web server
+4. Copy contents of ```<path-to-project-root>/dist``` into your web server's DocumentRoot
+  OR
+  Set your web server's DocumentRoot to ```<path-to-project-root>/dist```
 
 
 # Polymer 
