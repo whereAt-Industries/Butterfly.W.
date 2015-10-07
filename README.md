@@ -2,13 +2,15 @@
 
 ### Installation
 
-1. With Node.js installed, run the following one liner from the project root directory:
+With Node.js installed, run the following one liner from the project root directory:
 ```
  npm install -g gulp bower && npm install && bower install
 ```
 
-2. Serve ```<path-to-project>/app``` from a php enabled web server
-e.g For wampserver/apache, set ```DocumentRoot "<path-to-project>/app"```
+### Deployment
+1. Install a php enabled web server like wampserver
+2. Enable php_curl extension on web server
+3. Set ```<path-to-project>/app``` as the DocumentRoot
 
 
 # Polymer 
