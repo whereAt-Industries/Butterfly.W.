@@ -21,9 +21,9 @@ gulp serve
 gulp default
 ```
 This will create a ```dist``` folder in your project root directory
-2. Install a php enabled web server like LAMP server
-3. Enable php_curl extension on web server
-4. Copy contents of ```<path-to-project-root>/dist``` into your web server's DocumentRoot
+
+2. Install a php enabled web server like LAMP server and enable php_curl extension
+3. Copy contents of ```<path-to-project-root>/dist``` into your web server's DocumentRoot
   OR
   Set your web server's DocumentRoot to ```<path-to-project-root>/dist```
 
