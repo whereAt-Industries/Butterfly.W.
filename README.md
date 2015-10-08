@@ -8,7 +8,7 @@ With Node.js installed, run the following one liner from the project root direct
 ```
 
 ### Testing
-run the following command from the project root directory
+Run the following command from the project root directory
 ```
 gulp serve
 ```
@@ -16,16 +16,17 @@ gulp serve
 *API calls (e.g login, settings) through PHP bridge won't work in this mode, follow the deployment guide to enable them*
 
 ### Deployment
-1. run the following command from the project root directory
+1) Run the following command from the project root directory
 ```
 gulp default
 ```
-This will create a ```dist``` folder in your project root directory
+  This will create a ```dist``` folder in the project root directory
 
-2. Install a php enabled web server like LAMP server and enable php_curl extension
-3. Copy contents of ```<path-to-project-root>/dist``` into your web server's DocumentRoot
-  OR
-  Set your web server's DocumentRoot to ```<path-to-project-root>/dist```
+2) Install a php enabled web server like LAMP server and enable php_curl extension
+
+3) Copy contents of ```<path-to-project-root>/dist``` into your web server's DocumentRoot
+   OR
+   Set your web server's DocumentRoot to ```<path-to-project-root>/dist```
 
 
 # Polymer 
