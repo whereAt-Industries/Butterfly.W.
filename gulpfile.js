@@ -24,6 +24,7 @@ var historyApiFallback = require('connect-history-api-fallback');
 var packageJson = require('./package.json');
 var crypto = require('crypto');
 var polybuild = require('polybuild');
+var php = require('gulp-connect-php');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -93,10 +94,6 @@ gulp.task('copy', function () {
     dot: true
   }).pipe(gulp.dest('dist'));
 
-  var api = gulp.src([
-    'app/api/*'
-  ]).pipe(gulp.dest('dist/api'));
-
   var bower = gulp.src([
     'bower_components/**/*'
   ]).pipe(gulp.dest('dist/bower_components'));
@@ -114,7 +111,7 @@ gulp.task('copy', function () {
     .pipe($.rename('elements.vulcanized.html'))
     .pipe(gulp.dest('dist/elements'));
 
-  return merge(app, api, bower, elements, vulcanized, swBootstrap, swToolbox)
+  return merge(app, bower, elements, vulcanized, swBootstrap, swToolbox)
     .pipe($.size({title: 'copy'}));
 });
 
@@ -123,6 +120,13 @@ gulp.task('fonts', function () {
   return gulp.src(['app/fonts/**'])
     .pipe(gulp.dest('dist/fonts'))
     .pipe($.size({title: 'fonts'}));
+});
+
+// Copy php api files to dist
+gulp.task('api', function () {
+  return gulp.src(['app/api/*'])
+    .pipe(gulp.dest('dist/api'))
+    .pipe($.size({title: 'api'}));
 });
 
 // Scan your HTML for assets & optimize them
@@ -268,11 +272,18 @@ gulp.task('serve:dist', ['default'], function () {
 gulp.task('default', ['clean'], function (cb) {
   // Uncomment 'cache-config' after 'rename-index' if you are going to use service workers.
   runSequence(
-    ['copy', 'styles'],
+    ['copy', 'api', 'styles'],
     'elements',
-    ['jshint', 'images', 'fonts', 'html'],
+    [/*'jshint',*/ 'images', 'fonts', 'html'],
     'vulcanize','rename-index', // 'cache-config',
     cb);
+});
+
+// Build and serve the output from the dist build with php enabled
+gulp.task('serve:php', ['default'], function() {
+  php.server({
+    base: 'dist', open: true, keepalive: true
+  });
 });
 
 // Load tasks for web-component-tester

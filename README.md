@@ -8,25 +8,32 @@ With Node.js installed, run the following one liner from the project root direct
 ```
 
 ### Testing
-Run the following command from the project root directory
+##### Without PHP support
+From the project root directory run
 ```
 gulp serve
 ```
+*API calls (e.g login, settings) through PHP bridge won't work in this mode*
 
-*API calls (e.g login, settings) through PHP bridge won't work in this mode, follow the deployment guide to enable them*
+##### With PHP support
+1. Install PHP or a PHP enabled web server like LAMP server
+2. Add ```/path/to/php``` to your System PATH
+3. Enable curl extension in ```/path/to/php/php.ini```
+  e.g uncomment ```extension=curl.so``` or ```extension=php_curl.dll``` 
+4. From the project root directory run
+```
+gulp serve:php
+```
+*You will need to rerun this command when changes are made in this mode*
 
 ### Deployment
-1) Run the following command from the project root directory
+1. From the project root directory run
 ```
-gulp default
+gulp
 ```
   This will create a ```dist``` folder in the project root directory
-
-2) Install a php enabled web server like LAMP server and enable php_curl extension
-
-3) Copy contents of ```<path-to-project-root>/dist``` into your web server's DocumentRoot
-   OR
-   Set your web server's DocumentRoot to ```<path-to-project-root>/dist```
+2. Install a PHP enabled web server like LAMP server and enable curl extension
+3. Copy contents of ```/path/to/project-root/dist``` into your web server's DocumentRoot
 
 
 # Polymer 
