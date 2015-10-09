@@ -16,7 +16,7 @@ gulp serve
 *API calls (e.g login, settings) through PHP bridge won't work in this mode*
 
 ##### With PHP support
-1) Install PHP or a PHP enabled web server like LAMP server
+1) Install PHP or a PHP enabled web server like LAMP server (PHP must be 5.4.0 or higher)
 
 2) Add ```/path/to/php``` to your System PATH
 
