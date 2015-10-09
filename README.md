@@ -16,11 +16,14 @@ gulp serve
 *API calls (e.g login, settings) through PHP bridge won't work in this mode*
 
 ##### With PHP support
-1. Install PHP or a PHP enabled web server like LAMP server
-2. Add ```/path/to/php``` to your System PATH
-3. Enable curl extension in ```/path/to/php/php.ini```
+1) Install PHP or a PHP enabled web server like LAMP server
+
+2) Add ```/path/to/php``` to your System PATH
+
+3) Enable curl extension in ```/path/to/php/php.ini```
   e.g uncomment ```extension=curl.so``` or ```extension=php_curl.dll``` 
-4. From the project root directory run
+
+4) From the project root directory run
 ```
 gulp serve:php
 ```
