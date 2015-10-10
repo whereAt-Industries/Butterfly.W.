@@ -30,13 +30,15 @@ gulp serve:php
 *You will need to rerun this command when changes are made in this mode*
 
 ### Deployment
-1. From the project root directory run
+1) From the project root directory run
 ```
 gulp
 ```
-  This will create a ```dist``` folder in the project root directory
-2. Install a PHP enabled web server like LAMP server and enable curl extension
-3. Copy contents of ```/path/to/project-root/dist``` into your web server's DocumentRoot
+This will create a ```dist``` folder in the project root directory
+
+2) Install a PHP enabled web server like LAMP server and enable curl extension
+
+3) Copy contents of ```/path/to/project-root/dist``` into your web server's DocumentRoot
 
 
 # Polymer 
