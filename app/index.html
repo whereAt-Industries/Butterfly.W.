@@ -1,0 +1,141 @@
+<!--TODO: Replace all theme colors and images with official branding -->
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Polymer Starter Kit" />
+  <title>whereAt Industries</title>
+  <!-- Place favicon.ico in the `app/` directory -->
+
+  <!-- Chrome for Android theme color -->
+  <meta name="theme-color" content="#2E3AA1">
+
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Tile color for Win8 -->
+  <meta name="msapplication-TileColor" content="#3372DF">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="PSK">
+  <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
+  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
+
+  <!-- Tile icon for Win8 (144x144) -->
+  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild-->
+
+  <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <!-- endbuild -->
+
+  <!-- will be replaced with elements/elements.vulcanized.html -->
+  <link rel="import" href="elements/elements.html">
+  <!-- endreplace-->
+
+  <!-- For shared styles, shared-styles.html import in elements.html -->
+  <style is="custom-style" include="shared-styles"></style>
+
+  <!-- Styling -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+
+<body unresolved class="fullbleed layout vertical">
+  <span id="browser-sync-binding"></span>
+
+  <template is="dom-bind" id="app">
+    <iron-localstorage
+      name="current-user"
+      value="{{currentUser}}"
+      on-iron-localstorage-load-empty="initializeDefaultValue"></iron-localstorage>
+
+    <iron-ajax id="verify-user-ajax"
+               url="/api/verify.php"
+               params='{}'
+               handle-as="json"
+               on-response="verifyUser"
+               debounce-duration="300"></iron-ajax>
+
+    <iron-pages attr-for-selected="data-route" selected="{{route}}">
+
+      <section data-route="login">
+        <div id="screen-wrapper" class="layout horizontal center-center">
+          <google-map id="map"
+                      apiKey="AIzaSyARywG_CYNiZ2gUB_Ks4zlpuMYtQe5wQO0"
+                      latitude="51.993102"
+                      longitude="4.386495"
+                      zoom="12"
+                      mapType="roadmap"
+                      disableDefaultUi="true"></google-map>
+
+          <div id="login-screen">
+            <div class="login-top">
+              <div class="logo">
+                <img src="http://www.whereatcloud.com/wp-content/uploads/2015/02/Logo_FINAL-int-indx240.png" alt="logo"/>
+              </div>
+              <div class="company">SMART LOGISTICS PLATFORM</div>
+              <div class="beta">Private Beta</div>
+              <div class="by">by</div>
+              <div>where<strong>At</strong> Industries</div>
+            </div>
+            <form is="iron-form" action="/api/login.php" method="post" id="form-login" name="login" role="form">
+              <div hidden="[[!login_error]]" class="alert alert-danger">{{login_error}}</div>
+              <div hidden="[[!login_progress]]" class="alert alert-info">{{login_progress}}</div>
+              <div class="form-group">
+                <label for="inputUsername">Username:</label><br/>
+                <input id="inputUsername" type="text" name="username" class="form-control" required/>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword">Password:</label><br/>
+                <input id="inputPassword" type="password" name="password" class="form-control" required/>
+              </div>
+              <button type="submit" class="btn btn-blue">Log In</button>
+              <a href="http://www.whereatcloud.com/" class="btn btn-green pull-right">Sign up</a>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section data-route="user">
+        <wa-user-profile user="{{currentUser}}"></wa-user-profile>
+        <a href="/api/logout.php" class="btn btn-link">Log Out</a>
+      </section>
+    </iron-pages>
+
+    <!-- Uncomment next block to enable Service Worker support (1/2) -->
+    <!--
+    <paper-toast id="caching-complete"
+                 duration="6000"
+                 text="Caching complete! This app will work offline.">
+    </paper-toast>
+
+    <platinum-sw-register auto-register
+                          clients-claim
+                          skip-waiting
+                          on-service-worker-installed="displayInstalledToast">
+      <platinum-sw-cache default-cache-strategy="fastest"
+                         cache-config-file="cache-config.json">
+      </platinum-sw-cache>
+    </platinum-sw-register>
+    -->
+  </template>
+
+  <!-- build:js scripts/app.js -->
+  <script src="scripts/app.js"></script>
+  <!-- endbuild-->
+</body>
+
+</html>

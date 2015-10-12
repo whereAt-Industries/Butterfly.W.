@@ -1,0 +1,165 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../wa-password-dialog/wa-password-dialog.html">
+
+<dom-module id="wa-user-profile">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .user-info {
+        max-width: 1200px;
+        padding: 5px 10px;
+        margin:5px auto;
+        border: 1px solid #ddd;
+      }
+      .user-info .image {
+        width: 70px;
+        height: 70px;
+        margin-right: 5px;
+        border: 1px solid #ddd;
+      }
+      .toggle-switch {
+        display: inline-block;
+        color: #0000CC;
+        background-color: #fff;
+        padding: 3px 0;
+        margin: 0;
+        border-color: #0000CC;
+        border-radius: 0;
+      }
+      .toggle-switch span {
+        color: #333;
+        background-color: #fff;
+        padding: 5px 10px;
+      }
+      .toggle-switch span.on {
+        color: #fff;
+        background-color: #0000CC;
+      }
+      .toggle-switch.off span.on {
+        color: #333;
+        background-color: #fff;
+      }
+      .toggle-switch.off span.off {
+        color: #fff;
+        background-color: #0000CC;
+      }
+    </style>
+    <paper-material class="user-info layout horizontal" elevation="1">
+      <div class="flex">
+        <div class="layout horizontal">
+          <div>
+            <iron-image src="{{user.Logo_URL}}" class="image" sizing="contain" preload fade></iron-image>
+          </div>
+          <div class="flex">
+            | <span>{{user.Company_Name}}</span><br/>
+            | <span>{{user.Country}}</span><br/>
+            | <span>{{user.Business_Unit}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="layout horizontal">
+          <div>
+            <iron-image src="" id="gender_avatar" class="image" sizing="contain" preload fade></iron-image>
+          </div>
+          <div class="flex">
+            | <span>{{user.First_Name}}</span><br/>
+            | <span>{{user.Last_Name}}</span><br/>
+            | <span>{{user.Position}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex">
+        | <span>{{user.Phone_Number}}</span><br/>
+        | <span>{{user.Email}}</span><br/>
+        | Receive email alerts? <button type="button" id="alert_switch" class="btn toggle-switch" on-click="toggleSwitch"><span class="on">YES</span><span class="off">NO</span></button>
+      </div>
+    </paper-material>
+    <wa-password-dialog id="modal_confirm_password"></wa-password-dialog>
+    <iron-ajax id="save_ajax"
+               url="/api/settings.php"
+               method="POST"
+               params='{}'
+               handle-as="json"
+               on-response="onAjaxResponse"
+               debounce-duration="300"></iron-ajax>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'wa-user-profile',
+
+        ready: function() {
+          var profile = this;
+          var dialog = this.$.modal_confirm_password;
+          dialog.addEventListener('wa-password-dialog-submit', function(e) {
+            profile.saveChanges(e.detail);
+          });
+
+          dialog.addEventListener('wa-password-dialog-cancel', function() {
+            profile.$.alert_switch.disabled = false;
+          });
+        },
+
+        properties: {
+          user: {
+            type: Object,
+            value: null,
+            notify: true
+          }
+        },
+
+        observers: [
+          'userGenderChanged(user.Gender)',
+          'userAlertChanged(user.Alert)'
+        ],
+
+        userGenderChanged: function(gender) {
+          this.$.gender_avatar.src = this.getAvatar();
+        },
+
+        userAlertChanged: function(show) {
+          this.toggleClass('off', !show, this.$.alert_switch);
+        },
+
+        getAvatar: function (gender) {
+          var avatars = {
+            MALE: 'http://www.whereatcloud.com/wp-content/uploads/2015/09/man.png',
+            FEMALE: 'http://www.whereatcloud.com/wp-content/uploads/2015/09/woman.png'
+          };
+          return (gender=="FEMALE")?avatars.FEMALE:avatars.MALE;
+        },
+
+        toggleSwitch: function(e) {
+          this.$.alert_switch.disabled = true;
+          this.$.modal_confirm_password.open();
+        },
+
+        saveChanges: function(password) {
+          var ajax_req = this.$.save_ajax;
+          ajax_req.body = "username="+encodeURIComponent(this.user.Username)+ "&password="+encodeURIComponent(password)+"&alert="+encodeURIComponent(this.user.Alert?"false":"true");
+          ajax_req.generateRequest();
+        },
+
+        onAjaxResponse: function(e, req) {
+          var data = req.response;
+
+          //TODO: Change property from 'succes' to 'success' when typo is corrected in API
+          if(data && data.hasOwnProperty('succes')) {
+            this.set('user.Alert', this.user.Alert?0:1);
+          }
+          this.$.alert_switch.disabled = false;
+        }
+      });
+    })();
+  </script>
+
+</dom-module>
